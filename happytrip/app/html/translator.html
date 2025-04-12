@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip - Translator & Culture Guide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/translator.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">HappyTrip</div>
+        <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="destinations.html"><i class="fas fa-map-marked-alt"></i> Destinations</a>
+        <a href="bookings.html"><i class="fas fa-bookmark"></i> Bookings</a>
+        <a href="vlogs.html"><i class="fas fa-video"></i> Vlogs</a>
+        <a href="translator.html" class="active"><i class="fas fa-language"></i> Translator</a>
+        <a href="feedback.html"><i class="fas fa-comment"></i> Feedback</a>
+    </div>
+
+    <div class="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h2><i class="fas fa-language"></i> Translator & Culture Guide</h2>
+            <div class="user-actions">
+                <button class="btn btn-outline-primary"><i class="fas fa-user"></i> Profile</button>
+                <button class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <!-- Translator Section -->
+        <div class="translator-container">
+            <h3>Text Translator</h3>
+            <div class="translator-controls">
+                <div class="form-group" style="flex: 1;">
+                    <select id="sourceLanguage" class="form-select">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="fr">French</option>
+                        <option value="es">Spanish</option>
+                        <option value="ja">Japanese</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="th">Thai</option>
+                    </select>
+                </div>
+                
+                <button id="swapLanguagesBtn" class="swap-languages">
+                    <i class="fas fa-exchange-alt fa-2x"></i>
+                </button>
+                
+                <div class="form-group" style="flex: 1;">
+                    <select id="targetLanguage" class="form-select">
+                        <option value="hi">Hindi</option>
+                        <option value="en">English</option>
+                        <option value="fr">French</option>
+                        <option value="es">Spanish</option>
+                        <option value="ja">Japanese</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="th">Thai</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="translate-text-areas">
+                <div class="source-text-container">
+                    <label class="textarea-label" for="sourceText">Enter text to translate:</label>
+                    <textarea id="sourceText" class="form-control" placeholder="Type or paste text here..."></textarea>
+                </div>
+                
+                <div class="translated-text-container">
+                    <label class="textarea-label" for="translatedText">Translated text:</label>
+                    <textarea id="translatedText" class="form-control" readonly></textarea>
+                </div>
+            </div>
+            
+            <div class="translation-actions">
+                <button id="listenBtn" class="btn btn-outline-primary"><i class="fas fa-volume-up"></i> Listen</button>
+                <button id="copyBtn" class="btn btn-outline-secondary"><i class="fas fa-copy"></i> Copy</button>
+                <button id="translateBtn" class="btn btn-primary"><i class="fas fa-language"></i> Translate</button>
+            </div>
+        </div>
+
+        <!-- Phrase Book Section -->
+        <div class="phrase-book-container">
+            <h3>Travel Phrase Book</h3>
+            <div class="phrase-selectors">
+                <div class="phrase-selector">
+                    <label for="phrasebookLanguage">Language:</label>
+                    <select id="phrasebookLanguage" class="form-select">
+                        <option value="hi">Hindi</option>
+                        <option value="fr">French</option>
+                        <option value="es">Spanish</option>
+                        <option value="ja">Japanese</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="th">Thai</option>
+                    </select>
+                </div>
+                
+                <div class="phrase-selector">
+                    <label for="phraseCategory">Category:</label>
+                    <select id="phraseCategory" class="form-select">
+                        <option value="greetings">Greetings & Basics</option>
+                        <option value="emergencies">Emergencies</option>
+                        <option value="dining">Dining</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="accommodation">Accommodation</option>
+                        <option value="shopping">Shopping</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="phrase-list">
+                <ul id="phraseList" class="list-group">
+                    <!-- Phrases will be dynamically populated here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Culture Guide Section -->
+        <div class="culture-guide-container">
+            <h3>Cultural Etiquette Guide</h3>
+            
+            <div class="culture-selectors mb-4">
+                <label for="cultureCountry">Select Country:</label>
+                <select id="cultureCountry" class="form-select">
+                    <option value="japan">Japan</option>
+                    <option value="india">India</option>
+                    <option value="france">France</option>
+                    <option value="thailand">Thailand</option>
+                    <option value="italy">Italy</option>
+                    <option value="spain">Spain</option>
+                </select>
+            </div>
+            
+            <div id="japanCulture" class="culture-section">
+                <h4>Cultural Etiquette in Japan</h4>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-handshake"></i> Greetings</h5>
+                                <p class="card-text">Bowing is the common greeting. The depth and duration indicate the level of respect. Avoid initiating handshakes, though many Japanese are familiar with this western custom.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-utensils"></i> Dining</h5>
+                                <p class="card-text">Never stick chopsticks vertically in rice. Say "itadakimasu" before eating and "gochisousama" after. Slurping noodles is acceptable and shows appreciation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-shoe-prints"></i> Homes</h5>
+                                <p class="card-text">Always remove shoes before entering a Japanese home or traditional establishments. There's often a dedicated area in the entryway for this purpose.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-comments"></i> Communication</h5>
+                                <p class="card-text">Avoid direct "no" answers. Japanese often communicate indirectly. Silence is valued and not uncomfortable. Avoid excessive physical contact or talking loudly in public.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-user-tie"></i> Business</h5>
+                                <p class="card-text">Business cards (meishi) are exchanged with both hands and a slight bow. Examine cards carefully before placing them on the table, not in a pocket.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card culture-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-users"></i> Public Behavior</h5>
+                                <p class="card-text">Maintain proper queue etiquette. Avoid eating while walking in public. Talking on phones in public transport is discouraged. Public displays of affection are uncommon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other culture sections will be dynamically added -->
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-container">
+            <h3>Language Learning Resources</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-title">Duolingo</div>
+                    <div class="resource-description">Free language learning platform with gamified lessons</div>
+                    <a href="https://www.duolingo.com/" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Visit Website</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-title">Tandem</div>
+                    <div class="resource-description">Language exchange app to practice with native speakers</div>
+                    <a href="https://www.tandem.net/" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Visit Website</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-title">Memrise</div>
+                    <div class="resource-description">Vocabulary-focused language learning with spaced repetition</div>
+                    <a href="https://www.memrise.com/" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Visit Website</a>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-title">Lonely Planet Phrasebooks</div>
+                    <div class="resource-description">Essential phrases for travelers in print and digital formats</div>
+                    <a href="https://shop.lonelyplanet.com/categories/phrasebooks" target="_blank" class="btn btn-sm btn-outline-primary mt-2">Visit Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/translator.js"></script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

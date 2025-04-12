@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings - HappyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="app-container">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse" id="sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h2 class="mt-2">HappyTrip</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translator.html">
+                            <i class="fas fa-language"></i> Translator & Culture
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <h1 class="h2">Travel Bookings</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="user-menu">
+                            <button id="loginBtn" class="btn btn-outline-primary me-2">Log In</button>
+                            <button id="registerBtn" class="btn btn-primary">Register</button>
+                            <div id="userProfileArea" class="d-none">
+                                <span id="username">User</span>
+                                <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookings Page Content -->
+                <div class="booking-content">
+                    <div class="alert alert-info alert-dismissible fade show mb-4" role="alert">
+                        <strong>Login Required!</strong> Please log in to view your bookings or make new ones.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <ul class="nav nav-tabs mb-4" id="bookingTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button" role="tab" aria-controls="hotels" aria-selected="true">Hotels</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="flights-tab" data-bs-toggle="tab" data-bs-target="#flights" type="button" role="tab" aria-controls="flights" aria-selected="false">Flights</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities" type="button" role="tab" aria-controls="activities" aria-selected="false">Activities</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="packages-tab" data-bs-toggle="tab" data-bs-target="#packages" type="button" role="tab" aria-controls="packages" aria-selected="false">Packages</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Booking History</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="bookingTabContent">
+                        <!-- Hotels Tab -->
+                        <div class="tab-pane fade show active" id="hotels" role="tabpanel" aria-labelledby="hotels-tab">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Hotel Search</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="hotelSearchForm">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label for="destination" class="form-label">Destination</label>
+                                                <input type="text" class="form-control" id="destination" placeholder="City, Area or Hotel">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="checkin" class="form-label">Check-in</label>
+                                                <input type="date" class="form-control" id="checkin">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="checkout" class="form-label">Check-out</label>
+                                                <input type="date" class="form-control" id="checkout">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="rooms" class="form-label">Rooms</label>
+                                                <select class="form-select" id="rooms">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4+</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="guests" class="form-label">Guests</label>
+                                                <select class="form-select" id="guests">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <button type="submit" class="btn btn-primary">Search Hotels</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="featured-hotels mb-4">
+                                <h3 class="section-title">Featured Hotels</h3>
+                                <div class="row row-cols-1 row-cols-md-3 g-4 mt-2" id="featuredHotels">
+                                    <!-- Featured hotel cards will be loaded here -->
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/hotels/taj-palace.jpg" class="card-img-top" alt="Taj Palace">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title">Taj Palace</h5>
+                                                    <span class="badge bg-warning text-dark">★★★★★</span>
+                                                </div>
+                                                <p class="text-muted mb-1"><i class="fas fa-map-marker-alt"></i> New Delhi</p>
+                                                <p class="card-text">Luxurious 5-star hotel with world-class amenities and exceptional service.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹12,500/night</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/hotels/leela-palace.jpg" class="card-img-top" alt="The Leela Palace">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title">The Leela Palace</h5>
+                                                    <span class="badge bg-warning text-dark">★★★★★</span>
+                                                </div>
+                                                <p class="text-muted mb-1"><i class="fas fa-map-marker-alt"></i> Bengaluru</p>
+                                                <p class="card-text">Experience royal luxury in the heart of Bengaluru with stunning architecture.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹15,000/night</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/hotels/oberoi-udaivilas.jpg" class="card-img-top" alt="The Oberoi Udaivilas">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h5 class="card-title">The Oberoi Udaivilas</h5>
+                                                    <span class="badge bg-warning text-dark">★★★★★</span>
+                                                </div>
+                                                <p class="text-muted mb-1"><i class="fas fa-map-marker-alt"></i> Udaipur</p>
+                                                <p class="card-text">Palatial luxury hotel on the banks of Lake Pichola with stunning views.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹25,000/night</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flights Tab -->
+                        <div class="tab-pane fade" id="flights" role="tabpanel" aria-labelledby="flights-tab">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Flight Search</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="flightSearchForm">
+                                        <div class="mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tripType" id="oneway" value="oneway" checked>
+                                                <label class="form-check-label" for="oneway">One Way</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tripType" id="roundtrip" value="roundtrip">
+                                                <label class="form-check-label" for="roundtrip">Round Trip</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tripType" id="multicity" value="multicity">
+                                                <label class="form-check-label" for="multicity">Multi-City</label>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col-md-3">
+                                                <label for="fromCity" class="form-label">From</label>
+                                                <input type="text" class="form-control" id="fromCity" placeholder="Departure City">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="toCity" class="form-label">To</label>
+                                                <input type="text" class="form-control" id="toCity" placeholder="Arrival City">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="departDate" class="form-label">Depart Date</label>
+                                                <input type="date" class="form-control" id="departDate">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="returnDate" class="form-label">Return Date</label>
+                                                <input type="date" class="form-control" id="returnDate">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="travelers" class="form-label">Travelers</label>
+                                                <select class="form-select" id="travelers">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <button type="submit" class="btn btn-primary">Search Flights</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activities Tab -->
+                        <div class="tab-pane fade" id="activities" role="tabpanel" aria-labelledby="activities-tab">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Activity Search</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="activitySearchForm">
+                                        <div class="row g-3">
+                                            <div class="col-md-4">
+                                                <label for="activityLocation" class="form-label">Location</label>
+                                                <input type="text" class="form-control" id="activityLocation" placeholder="Where are you going?">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="activityDate" class="form-label">Date</label>
+                                                <input type="date" class="form-control" id="activityDate">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="activityType" class="form-label">Activity Type</label>
+                                                <select class="form-select" id="activityType">
+                                                    <option value="">All Activities</option>
+                                                    <option value="adventure">Adventure</option>
+                                                    <option value="cultural">Cultural</option>
+                                                    <option value="nature">Nature & Wildlife</option>
+                                                    <option value="food">Food & Culinary</option>
+                                                    <option value="historical">Historical</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="numPeople" class="form-label">Number of People</label>
+                                                <select class="form-select" id="numPeople">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5+">5+</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <button type="submit" class="btn btn-primary">Search Activities</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Packages Tab -->
+                        <div class="tab-pane fade" id="packages" role="tabpanel" aria-labelledby="packages-tab">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Package Search</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="packageSearchForm">
+                                        <div class="row g-3">
+                                            <div class="col-md-3">
+                                                <label for="packageDestination" class="form-label">Destination</label>
+                                                <input type="text" class="form-control" id="packageDestination" placeholder="Where to?">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="startDate" class="form-label">Start Date</label>
+                                                <input type="date" class="form-control" id="startDate">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="duration" class="form-label">Duration</label>
+                                                <select class="form-select" id="duration">
+                                                    <option value="3-5">3-5 days</option>
+                                                    <option value="6-8">6-8 days</option>
+                                                    <option value="9-12">9-12 days</option>
+                                                    <option value="13+">13+ days</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="packageType" class="form-label">Package Type</label>
+                                                <select class="form-select" id="packageType">
+                                                    <option value="adventure">Adventure</option>
+                                                    <option value="beach">Beach</option>
+                                                    <option value="hill">Hill Stations</option>
+                                                    <option value="heritage">Heritage</option>
+                                                    <option value="wildlife">Wildlife</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="budget" class="form-label">Budget Range</label>
+                                                <select class="form-select" id="budget">
+                                                    <option value="budget">Budget (Under ₹20,000)</option>
+                                                    <option value="standard">Standard (₹20,000-₹50,000)</option>
+                                                    <option value="premium">Premium (₹50,000-₹1,00,000)</option>
+                                                    <option value="luxury">Luxury (Above ₹1,00,000)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 mt-2">
+                                            <div class="col-md-12 text-end">
+                                                <button type="submit" class="btn btn-primary">Search Packages</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="featured-packages mb-4">
+                                <h3 class="section-title">Popular Packages</h3>
+                                <div class="row row-cols-1 row-cols-md-3 g-4 mt-2" id="featuredPackages">
+                                    <!-- Sample packages -->
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/packages/kerala.jpg" class="card-img-top" alt="Kerala Package">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Kerala Backwaters Escape</h5>
+                                                <p class="text-muted mb-1"><i class="fas fa-calendar"></i> 5 Days / 4 Nights</p>
+                                                <p class="card-text">Experience the serene backwaters, tea plantations, and pristine beaches of God's Own Country.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹32,500/person</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/packages/rajasthan.jpg" class="card-img-top" alt="Rajasthan Package">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Royal Rajasthan Tour</h5>
+                                                <p class="text-muted mb-1"><i class="fas fa-calendar"></i> 7 Days / 6 Nights</p>
+                                                <p class="card-text">Explore the majestic forts, vibrant culture, and royal heritage of Rajasthan.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹45,999/person</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100">
+                                            <img src="../images/packages/himachal.jpg" class="card-img-top" alt="Himachal Package">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Himachal Adventure</h5>
+                                                <p class="text-muted mb-1"><i class="fas fa-calendar"></i> 6 Days / 5 Nights</p>
+                                                <p class="card-text">Discover the snow-capped mountains, lush valleys, and adventure activities in Himachal Pradesh.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary fw-bold">₹38,750/person</span>
+                                                    <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Booking History Tab -->
+                        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                            <div class="login-required-message text-center py-5">
+                                <i class="fas fa-user-lock fa-4x text-muted mb-3"></i>
+                                <h3>Login Required</h3>
+                                <p class="lead">Please log in to view your booking history.</p>
+                                <button class="btn btn-primary mt-3" id="historyLoginBtn">Log In</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Hotel Detail Modal -->
+    <div class="modal fade" id="hotelDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hotelName">Hotel Name</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="hotelCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="../images/hotels/hotel-room1.jpg" class="d-block w-100" alt="Hotel Room">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../images/hotels/hotel-room2.jpg" class="d-block w-100" alt="Hotel Dining">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../images/hotels/hotel-room3.jpg" class="d-block w-100" alt="Hotel Pool">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div id="hotelDetails">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>About This Hotel</h4>
+                                <p id="hotelDescription">Hotel description will appear here.</p>
+                                <h5 class="mt-3">Amenities</h5>
+                                <div class="row" id="hotelAmenities">
+                                    <div class="col-md-4"><i class="fas fa-wifi"></i> Free WiFi</div>
+                                    <div class="col-md-4"><i class="fas fa-swimming-pool"></i> Swimming Pool</div>
+                                    <div class="col-md-4"><i class="fas fa-utensils"></i> Restaurant</div>
+                                    <div class="col-md-4"><i class="fas fa-parking"></i> Free Parking</div>
+                                    <div class="col-md-4"><i class="fas fa-spa"></i> Spa</div>
+                                    <div class="col-md-4"><i class="fas fa-dumbbell"></i> Fitness Center</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Price Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted mb-1" id="roomType">Deluxe Room</p>
+                                        <h4 class="text-primary mb-3" id="roomPrice">₹12,500/night</h4>
+                                        <p class="text-muted mb-0"><small>+₹2,250 taxes and fees</small></p>
+                                        <hr>
+                                        <button class="btn btn-primary w-100" id="bookRoomBtn">Book Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modals will be included via JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/bookings.js"></script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

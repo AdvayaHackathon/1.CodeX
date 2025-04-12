@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip Admin - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+        }
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            max-width: 80px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="../images/logo.png" alt="HappyTrip Logo" class="logo">
+            <h2>HappyTrip Admin</h2>
+            <p class="text-muted">Administrator Access Only</p>
+        </div>
+        
+        <form id="adminLoginForm">
+            <div class="mb-3">
+                <label for="adminUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="adminUsername" required>
+            </div>
+            <div class="mb-3">
+                <label for="adminPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="adminPassword" required>
+            </div>
+            <div id="loginError" class="alert alert-danger d-none" role="alert">
+                Invalid username or password!
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a href="../../index.html" class="btn btn-outline-secondary">Back to Main Site</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Admin login credentials
+        const ADMIN_USERNAME = "Sanjay";
+        const ADMIN_PASSWORD = "Sanjay99";
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const loginError = document.getElementById('loginError');
+            
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                // Set admin session
+                localStorage.setItem('adminLoggedIn', 'true');
+                localStorage.setItem('adminUsername', username);
+                
+                // Redirect to admin dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                loginError.classList.remove('d-none');
+                setTimeout(() => {
+                    loginError.classList.add('d-none');
+                }, 3000);
+            }
+        });
+    </script>
+
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

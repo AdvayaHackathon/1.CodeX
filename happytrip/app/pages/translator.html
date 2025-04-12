@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator & Culture - HappyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="app-container">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse" id="sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h2 class="mt-2">HappyTrip</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="translator.html">
+                            <i class="fas fa-language"></i> Translator & Culture
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <h1 class="h2">Translator & Culture Guide</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="user-menu">
+                            <button id="loginBtn" class="btn btn-outline-primary me-2">Log In</button>
+                            <button id="registerBtn" class="btn btn-primary">Register</button>
+                            <div id="userProfileArea" class="d-none">
+                                <span id="username">User</span>
+                                <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Translator & Culture Content -->
+                <div class="translator-content">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Language Translator</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form id="translatorForm">
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <label for="sourceLanguage" class="form-label">Translate from</label>
+                                                    <select class="form-select" id="sourceLanguage">
+                                                        <option value="en" selected>English</option>
+                                                        <option value="hi">Hindi</option>
+                                                        <option value="fr">French</option>
+                                                        <option value="es">Spanish</option>
+                                                        <option value="de">German</option>
+                                                        <option value="it">Italian</option>
+                                                        <option value="ja">Japanese</option>
+                                                        <option value="zh">Chinese</option>
+                                                        <option value="ko">Korean</option>
+                                                        <option value="ru">Russian</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 d-flex align-items-center justify-content-center mt-4">
+                                                    <button type="button" class="btn btn-outline-secondary" id="swapLanguagesBtn">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label for="targetLanguage" class="form-label">Translate to</label>
+                                                    <select class="form-select" id="targetLanguage">
+                                                        <option value="en">English</option>
+                                                        <option value="hi" selected>Hindi</option>
+                                                        <option value="fr">French</option>
+                                                        <option value="es">Spanish</option>
+                                                        <option value="de">German</option>
+                                                        <option value="it">Italian</option>
+                                                        <option value="ja">Japanese</option>
+                                                        <option value="zh">Chinese</option>
+                                                        <option value="ko">Korean</option>
+                                                        <option value="ru">Russian</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="sourceText" class="form-label">Enter text to translate</label>
+                                            <textarea class="form-control" id="sourceText" rows="5" placeholder="Type text here..."></textarea>
+                                        </div>
+                                        <div class="mb-3 text-end">
+                                            <button type="button" id="translateBtn" class="btn btn-primary">Translate</button>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="translatedText" class="form-label">Translation</label>
+                                            <textarea class="form-control" id="translatedText" rows="5" placeholder="Translation will appear here..." readonly></textarea>
+                                        </div>
+                                        <div class="actions text-end">
+                                            <button type="button" id="copyBtn" class="btn btn-outline-secondary">
+                                                <i class="fas fa-copy"></i> Copy
+                                            </button>
+                                            <button type="button" id="listenBtn" class="btn btn-outline-secondary">
+                                                <i class="fas fa-volume-up"></i> Listen
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Phrase Book</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="phraseLanguage" class="form-label">Select Language</label>
+                                        <select class="form-select" id="phraseLanguage">
+                                            <option value="hi" selected>Hindi</option>
+                                            <option value="fr">French</option>
+                                            <option value="es">Spanish</option>
+                                            <option value="de">German</option>
+                                            <option value="it">Italian</option>
+                                            <option value="ja">Japanese</option>
+                                            <option value="zh">Chinese</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phraseCategory" class="form-label">Category</label>
+                                        <select class="form-select" id="phraseCategory">
+                                            <option value="greetings" selected>Greetings</option>
+                                            <option value="transportation">Transportation</option>
+                                            <option value="accommodation">Accommodation</option>
+                                            <option value="dining">Dining</option>
+                                            <option value="shopping">Shopping</option>
+                                            <option value="emergency">Emergency</option>
+                                        </select>
+                                    </div>
+                                    <div class="phrase-list mt-4">
+                                        <ul class="list-group" id="phrasesList">
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>Hello</strong></p>
+                                                        <p class="mb-0 text-primary">नमस्ते (Namaste)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>How are you?</strong></p>
+                                                        <p class="mb-0 text-primary">आप कैसे हैं? (Aap kaise hain?)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>Thank you</strong></p>
+                                                        <p class="mb-0 text-primary">धन्यवाद (Dhanyavaad)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>Yes</strong></p>
+                                                        <p class="mb-0 text-primary">हां (Haan)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>No</strong></p>
+                                                        <p class="mb-0 text-primary">नहीं (Nahin)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <p class="mb-0"><strong>Excuse me</strong></p>
+                                                        <p class="mb-0 text-primary">क्षमा कीजिए (Kshama keejiye)</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary listen-phrase">
+                                                        <i class="fas fa-volume-up"></i>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">Cultural Etiquette Guide</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="cultureCountry" class="form-label">Select Country</label>
+                                    <select class="form-select" id="cultureCountry">
+                                        <option value="india" selected>India</option>
+                                        <option value="japan">Japan</option>
+                                        <option value="france">France</option>
+                                        <option value="italy">Italy</option>
+                                        <option value="thailand">Thailand</option>
+                                    </select>
+                                </div>
+                                <div id="cultureInfo" class="mt-4">
+                                    <div class="culture-section mb-4" id="indiaInfo">
+                                        <h4>Cultural Etiquette in India</h4>
+                                        <div class="row mt-3">
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-handshake"></i> Greetings</h5>
+                                                        <p class="card-text">In India, the traditional greeting is "Namaste" with palms pressed together in front of the chest and a slight bow. Handshakes are also common in business settings. Remove shoes before entering homes or places of worship.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-utensils"></i> Dining</h5>
+                                                        <p class="card-text">In traditional settings, food may be eaten with your right hand only. Left hands are considered unclean. Wait to be seated and served. It's polite to try everything offered. Always express appreciation for the food.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-tshirt"></i> Dress Code</h5>
+                                                        <p class="card-text">Dress modestly, especially at religious sites where shoulders and knees should be covered. Remove shoes before entering temples, mosques, and homes. Wearing bright colors is welcome and common.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-church"></i> Religious Customs</h5>
+                                                        <p class="card-text">India is diverse with many religions. Always be respectful at places of worship. Don't touch or point at religious statues or images. Photography may be restricted in certain areas of temples and mosques.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-gift"></i> Gift Giving</h5>
+                                                        <p class="card-text">Give and receive gifts with both hands. Avoid gifts of leather to Hindus or alcohol/meat items to Muslims. Gifts are often opened in private, not in front of the giver. Sweets are always a safe gift option.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><i class="fas fa-exclamation-triangle"></i> Taboos</h5>
+                                                        <p class="card-text">Avoid public displays of affection. Don't point the soles of your feet toward people or religious objects. Avoid touching someone's head, as it's considered sacred. Ask before taking photos of people.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title mb-0">Additional Resources</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>Recommended Language Apps</h4>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <i class="fab fa-google text-primary me-2"></i> Google Translate
+                                                    <p class="text-muted small mb-0">Free translation for over 100 languages, works offline.</p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-comment-dots text-primary me-2"></i> Duolingo
+                                                    <p class="text-muted small mb-0">Free language learning with gamified lessons.</p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-globe text-primary me-2"></i> TripLingo
+                                                    <p class="text-muted small mb-0">Provides phrases, voice translator, and cultural tips.</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Cultural Guidebooks</h4>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-book text-primary me-2"></i> Lonely Planet Cultural Guides
+                                                    <p class="text-muted small mb-0">Comprehensive cultural information for major destinations.</p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-book-reader text-primary me-2"></i> Culture Smart! Series
+                                                    <p class="text-muted small mb-0">Concise guides to customs and etiquette around the world.</p>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fas fa-globe-americas text-primary me-2"></i> World Nomads
+                                                    <p class="text-muted small mb-0">Free online cultural guides and language lessons.</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Authentication Modals will be included via JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/translator.js"></script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

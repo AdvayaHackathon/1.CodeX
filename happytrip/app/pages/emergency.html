@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Information - HappyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="app-container">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse" id="sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h2 class="mt-2">HappyTrip</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translator.html">
+                            <i class="fas fa-language"></i> Translator & Culture
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <h1 class="h2">Emergency Information</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="user-menu">
+                            <button id="loginBtn" class="btn btn-outline-primary me-2">Log In</button>
+                            <button id="registerBtn" class="btn btn-primary">Register</button>
+                            <div id="userProfileArea" class="d-none">
+                                <span id="username">User</span>
+                                <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Info Content -->
+                <div class="emergency-content">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Your safety is our priority. Save these emergency contacts and services for quick access during your travels.
+                    </div>
+
+                    <!-- Current Location Section -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0"><i class="fas fa-map-marker-alt"></i> Your Current Location</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div id="locationInfo">
+                                        <p class="lead mb-1" id="currentCity">Detecting your location...</p>
+                                        <p class="text-muted" id="currentCountry"></p>
+                                        <button class="btn btn-outline-primary mb-3" id="detectLocationBtn">
+                                            <i class="fas fa-location-arrow"></i> Update Location
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="emergencyMap" style="height: 200px; border-radius: 8px;">
+                                        <!-- Map will be loaded here -->
+                                        <div class="d-flex justify-content-center align-items-center h-100 bg-light">
+                                            <p class="text-muted">Map loading...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Universal Emergency Numbers -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-danger text-white">
+                            <h3 class="mb-0"><i class="fas fa-phone-alt"></i> Universal Emergency Numbers</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="emergency-contact-card p-3 bg-light rounded">
+                                        <h4><i class="fas fa-ambulance text-danger"></i> Medical Emergency</h4>
+                                        <p class="lead mb-1"><a href="tel:112" class="text-danger fw-bold">112</a></p>
+                                        <p class="text-muted">Universal European Emergency</p>
+                                        <p class="lead mb-1"><a href="tel:911" class="text-danger fw-bold">911</a></p>
+                                        <p class="text-muted">North America</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="emergency-contact-card p-3 bg-light rounded">
+                                        <h4><i class="fas fa-shield-alt text-primary"></i> Police</h4>
+                                        <p class="lead mb-1"><a href="tel:112" class="text-primary fw-bold">112</a></p>
+                                        <p class="text-muted">Universal European Emergency</p>
+                                        <p class="lead mb-1"><a href="tel:911" class="text-primary fw-bold">911</a></p>
+                                        <p class="text-muted">North America</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="emergency-contact-card p-3 bg-light rounded">
+                                        <h4><i class="fas fa-fire text-warning"></i> Fire Department</h4>
+                                        <p class="lead mb-1"><a href="tel:112" class="text-warning fw-bold">112</a></p>
+                                        <p class="text-muted">Universal European Emergency</p>
+                                        <p class="lead mb-1"><a href="tel:911" class="text-warning fw-bold">911</a></p>
+                                        <p class="text-muted">North America</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Local Emergency Services -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0"><i class="fas fa-first-aid"></i> Local Emergency Services</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- This will be populated based on location -->
+                            <div id="localEmergencyServices">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading local emergency services based on your location...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Embassy Information -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="mb-0"><i class="fas fa-building"></i> Embassy Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="userCountry" class="form-label">Your Home Country</label>
+                                        <select class="form-select" id="userCountry">
+                                            <option value="" selected>Select your country</option>
+                                            <option value="us">United States</option>
+                                            <option value="uk">United Kingdom</option>
+                                            <option value="ca">Canada</option>
+                                            <option value="au">Australia</option>
+                                            <option value="in">India</option>
+                                            <option value="de">Germany</option>
+                                            <option value="fr">France</option>
+                                            <option value="jp">Japan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-info mt-4" id="findEmbassyBtn">
+                                        <i class="fas fa-search"></i> Find Embassy/Consulate
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="embassyResults">
+                                <!-- Embassy results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Preparation Tips -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h3 class="mb-0"><i class="fas fa-clipboard-list"></i> Emergency Preparation Tips</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="fas fa-heartbeat text-danger"></i> Medical Preparation</h4>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Carry essential medications</li>
+                                                <li class="list-group-item">Have a basic first aid kit</li>
+                                                <li class="list-group-item">Keep medical insurance card</li>
+                                                <li class="list-group-item">Know blood type and allergies</li>
+                                                <li class="list-group-item">Research medical facilities at destination</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="fas fa-id-card text-primary"></i> Document Safety</h4>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Photograph all travel documents</li>
+                                                <li class="list-group-item">Email docs to yourself & trusted person</li>
+                                                <li class="list-group-item">Carry photocopies separate from originals</li>
+                                                <li class="list-group-item">Register with embassy if available</li>
+                                                <li class="list-group-item">Keep emergency contacts accessible</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="fas fa-mobile-alt text-success"></i> Communication Plan</h4>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Download offline maps of your area</li>
+                                                <li class="list-group-item">Save emergency phrases in local language</li>
+                                                <li class="list-group-item">Have backup battery/power bank</li>
+                                                <li class="list-group-item">Set check-in schedule with family</li>
+                                                <li class="list-group-item">Know how to call internationally</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save for Offline Section -->
+                    <div class="card mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h3 class="mb-0"><i class="fas fa-download"></i> Save Emergency Info Offline</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Save this information for offline access in case of emergency with no internet connection:</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-outline-primary" id="downloadPdfBtn">
+                                    <i class="fas fa-file-pdf"></i> Download as PDF
+                                </button>
+                                <button class="btn btn-outline-success" id="saveLocallyBtn">
+                                    <i class="fas fa-save"></i> Save to Device
+                                </button>
+                                <button class="btn btn-outline-secondary" id="printInfoBtn">
+                                    <i class="fas fa-print"></i> Print Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Authentication Modals will be included via JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/emergency.js"></script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

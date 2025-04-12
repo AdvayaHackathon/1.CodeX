@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip Admin - Translation Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Admin Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h4 class="mt-2">HappyTrip Admin</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="translation.html">
+                            <i class="fas fa-language"></i> Translation
+                        </a>
+                    </li>
+                    <li class="nav-item mt-5">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Translation Management</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="admin-user-info">
+                            Welcome, <span id="adminName">Admin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Management Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Supported Languages</h5>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLanguageModal">
+                                    <i class="fas fa-plus-circle"></i> Add New Language
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Language</th>
+                                                <th>Code</th>
+                                                <th>Native Name</th>
+                                                <th>Status</th>
+                                                <th>Phrases Translated</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="languagesTable">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Translation Phrases Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Translation Phrases</h5>
+                                <div>
+                                    <select id="filterLanguage" class="form-select d-inline-block me-2" style="width: auto;">
+                                        <option value="">All Languages</option>
+                                        <option value="hi">Hindi</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                        <option value="de">German</option>
+                                        <option value="ja">Japanese</option>
+                                    </select>
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPhraseModal">
+                                        <i class="fas fa-plus-circle"></i> Add New Phrase
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Phrase Key</th>
+                                                <th>English (Default)</th>
+                                                <th>Translation</th>
+                                                <th>Language</th>
+                                                <th>Last Updated</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="phrasesTable">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cultural Information Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Cultural Information</h5>
+                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addCultureModal">
+                                    <i class="fas fa-plus-circle"></i> Add Cultural Info
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Country</th>
+                                                <th>Language</th>
+                                                <th>Category</th>
+                                                <th>Title</th>
+                                                <th>Information Preview</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cultureTable">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Language Modal -->
+    <div class="modal fade" id="addLanguageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Language</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addLanguageForm">
+                        <div class="mb-3">
+                            <label for="languageName" class="form-label">Language Name (English)</label>
+                            <input type="text" class="form-control" id="languageName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="languageCode" class="form-label">Language Code (ISO)</label>
+                            <input type="text" class="form-control" id="languageCode" required>
+                            <div class="form-text">Use ISO 639-1 code (e.g., 'en' for English, 'es' for Spanish)</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nativeName" class="form-label">Native Name</label>
+                            <input type="text" class="form-control" id="nativeName" required>
+                            <div class="form-text">Name of the language in its own script (e.g., 'Español' for Spanish)</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="languageStatus" class="form-label">Status</label>
+                            <select class="form-select" id="languageStatus" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="in-progress">In Progress</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveLanguageBtn">Save Language</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Phrase Modal -->
+    <div class="modal fade" id="addPhraseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Translation Phrase</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPhraseForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phraseCategory" class="form-label">Category</label>
+                                <select class="form-select" id="phraseCategory" required>
+                                    <option value="common">Common Phrases</option>
+                                    <option value="travel">Travel Specific</option>
+                                    <option value="emergency">Emergency</option>
+                                    <option value="food">Food & Dining</option>
+                                    <option value="accommodation">Accommodation</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phraseKey" class="form-label">Phrase Key</label>
+                                <input type="text" class="form-control" id="phraseKey" required>
+                                <div class="form-text">Unique identifier for this phrase (e.g., 'greeting.hello')</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="englishPhrase" class="form-label">English Phrase (Default)</label>
+                            <input type="text" class="form-control" id="englishPhrase" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="translationLanguage" class="form-label">Translation Language</label>
+                            <select class="form-select" id="translationLanguage" required>
+                                <option value="">-- Select Language --</option>
+                                <option value="hi">Hindi</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="de">German</option>
+                                <option value="ja">Japanese</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="translatedPhrase" class="form-label">Translated Phrase</label>
+                            <input type="text" class="form-control" id="translatedPhrase" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="savePhraseBtn">Save Phrase</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Cultural Information Modal -->
+    <div class="modal fade" id="addCultureModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Cultural Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCultureForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cultureCountry" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="cultureCountry" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cultureLanguage" class="form-label">Primary Language</label>
+                                <select class="form-select" id="cultureLanguage" required>
+                                    <option value="">-- Select Language --</option>
+                                    <option value="hi">Hindi</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="ja">Japanese</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cultureCategory" class="form-label">Category</label>
+                            <select class="form-select" id="cultureCategory" required>
+                                <option value="etiquette">Etiquette & Customs</option>
+                                <option value="gestures">Gestures & Body Language</option>
+                                <option value="greetings">Greetings & Politeness</option>
+                                <option value="taboos">Cultural Taboos</option>
+                                <option value="festivals">Festivals & Celebrations</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cultureTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="cultureTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cultureInfo" class="form-label">Cultural Information</label>
+                            <textarea class="form-control" id="cultureInfo" rows="5" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveCultureBtn">Save Information</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminLoggedIn = localStorage.getItem('adminLoggedIn');
+            const adminUsername = localStorage.getItem('adminUsername');
+            
+            if (!adminLoggedIn || adminLoggedIn !== 'true') {
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('adminName').textContent = adminUsername;
+            }
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'login.html';
+            });
+            
+            // Load translation data
+            loadLanguages();
+            loadPhrases();
+            loadCulturalInfo();
+            
+            // Add event listeners for save buttons
+            document.getElementById('saveLanguageBtn').addEventListener('click', saveLanguage);
+            document.getElementById('savePhraseBtn').addEventListener('click', savePhrase);
+            document.getElementById('saveCultureBtn').addEventListener('click', saveCulturalInfo);
+            
+            // Add event listener for language filter
+            document.getElementById('filterLanguage').addEventListener('change', function() {
+                loadPhrases(this.value);
+            });
+        });
+        
+        // Load supported languages
+        function loadLanguages() {
+            const languages = [
+                {
+                    name: 'Hindi',
+                    code: 'hi',
+                    nativeName: 'हिन्दी',
+                    status: 'active',
+                    phrasesCount: 175
+                },
+                {
+                    name: 'Spanish',
+                    code: 'es',
+                    nativeName: 'Español',
+                    status: 'active',
+                    phrasesCount: 210
+                },
+                {
+                    name: 'French',
+                    code: 'fr',
+                    nativeName: 'Français',
+                    status: 'active',
+                    phrasesCount: 195
+                },
+                {
+                    name: 'German',
+                    code: 'de',
+                    nativeName: 'Deutsch',
+                    status: 'active',
+                    phrasesCount: 187
+                },
+                {
+                    name: 'Japanese',
+                    code: 'ja',
+                    nativeName: '日本語',
+                    status: 'in-progress',
+                    phrasesCount: 95
+                }
+            ];
+            
+            const tableBody = document.getElementById('languagesTable');
+            tableBody.innerHTML = '';
+            
+            languages.forEach(lang => {
+                const row = document.createElement('tr');
+                
+                // Set status badge color
+                let statusBadgeClass = 'bg-success';
+                if (lang.status === 'inactive') statusBadgeClass = 'bg-danger';
+                if (lang.status === 'in-progress') statusBadgeClass = 'bg-warning text-dark';
+                
+                row.innerHTML = `
+                    <td>${lang.name}</td>
+                    <td>${lang.code}</td>
+                    <td>${lang.nativeName}</td>
+                    <td><span class="badge ${statusBadgeClass}">${lang.status}</span></td>
+                    <td>${lang.phrasesCount}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-primary edit-language" data-code="${lang.code}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-language" data-code="${lang.code}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.edit-language').forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    alert(`Edit language with code: ${code}`);
+                    // In a real application, this would open an edit modal and populate it with data
+                });
+            });
+            
+            document.querySelectorAll('.delete-language').forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    if (confirm(`Are you sure you want to delete the language with code: ${code}?`)) {
+                        alert(`Language deleted: ${code}`);
+                        loadLanguages(); // Reload the table
+                    }
+                });
+            });
+        }
+        
+        // Load translation phrases
+        function loadPhrases(languageFilter = '') {
+            const phrases = [
+                {
+                    category: 'common',
+                    key: 'greeting.hello',
+                    english: 'Hello',
+                    translation: 'Hola',
+                    language: 'es',
+                    updated: '2023-04-15'
+                },
+                {
+                    category: 'common',
+                    key: 'greeting.goodbye',
+                    english: 'Goodbye',
+                    translation: 'Adiós',
+                    language: 'es',
+                    updated: '2023-04-15'
+                },
+                {
+                    category: 'emergency',
+                    key: 'emergency.help',
+                    english: 'Help!',
+                    translation: 'Ayuda!',
+                    language: 'es',
+                    updated: '2023-04-16'
+                },
+                {
+                    category: 'common',
+                    key: 'greeting.hello',
+                    english: 'Hello',
+                    translation: 'नमस्ते',
+                    language: 'hi',
+                    updated: '2023-04-14'
+                },
+                {
+                    category: 'common',
+                    key: 'greeting.thankyou',
+                    english: 'Thank you',
+                    translation: 'धन्यवाद',
+                    language: 'hi',
+                    updated: '2023-04-14'
+                },
+                {
+                    category: 'travel',
+                    key: 'transport.taxi',
+                    english: 'I need a taxi',
+                    translation: 'मुझे एक टैक्सी चाहिए',
+                    language: 'hi',
+                    updated: '2023-04-17'
+                },
+                {
+                    category: 'common',
+                    key: 'greeting.hello',
+                    english: 'Hello',
+                    translation: 'Bonjour',
+                    language: 'fr',
+                    updated: '2023-04-15'
+                },
+                {
+                    category: 'food',
+                    key: 'food.order',
+                    english: 'I would like to order',
+                    translation: 'Je voudrais commander',
+                    language: 'fr',
+                    updated: '2023-04-18'
+                }
+            ];
+            
+            // Filter by language if specified
+            const filteredPhrases = languageFilter ? 
+                phrases.filter(phrase => phrase.language === languageFilter) : 
+                phrases;
+            
+            const tableBody = document.getElementById('phrasesTable');
+            tableBody.innerHTML = '';
+            
+            filteredPhrases.forEach(phrase => {
+                const row = document.createElement('tr');
+                
+                // Capitalize category
+                const category = phrase.category.charAt(0).toUpperCase() + phrase.category.slice(1);
+                
+                row.innerHTML = `
+                    <td>${category}</td>
+                    <td>${phrase.key}</td>
+                    <td>${phrase.english}</td>
+                    <td>${phrase.translation}</td>
+                    <td>${getLanguageName(phrase.language)} (${phrase.language})</td>
+                    <td>${new Date(phrase.updated).toLocaleDateString()}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-primary edit-phrase" data-key="${phrase.key}" data-lang="${phrase.language}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-phrase" data-key="${phrase.key}" data-lang="${phrase.language}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners for edit and delete buttons
+            document.querySelectorAll('.edit-phrase').forEach(button => {
+                button.addEventListener('click', function() {
+                    const key = this.getAttribute('data-key');
+                    const lang = this.getAttribute('data-lang');
+                    alert(`Edit phrase with key: ${key} in language: ${lang}`);
+                    // In a real application, this would open an edit modal
+                });
+            });
+            
+            document.querySelectorAll('.delete-phrase').forEach(button => {
+                button.addEventListener('click', function() {
+                    const key = this.getAttribute('data-key');
+                    const lang = this.getAttribute('data-lang');
+                    if (confirm(`Are you sure you want to delete the phrase "${key}" in ${getLanguageName(lang)}?`)) {
+                        alert(`Phrase deleted: ${key} (${lang})`);
+                        loadPhrases(languageFilter); // Reload the table
+                    }
+                });
+            });
+        }
+        
+        // Load cultural information
+        function loadCulturalInfo() {
+            const culturalInfo = [
+                {
+                    id: 1,
+                    country: 'India',
+                    language: 'hi',
+                    category: 'etiquette',
+                    title: 'Greeting with Namaste',
+                    info: 'In India, people traditionally greet each other with "Namaste" by pressing palms together in front of the chest with a slight bow. This is a respectful way to greet someone without physical contact.'
+                },
+                {
+                    id: 2,
+                    country: 'Japan',
+                    language: 'ja',
+                    category: 'etiquette',
+                    title: 'Removing Shoes Before Entering',
+                    info: 'In Japan, it is customary to remove your shoes before entering homes, traditional restaurants, temples, and many other places. Look for shoe racks or areas where others have left their shoes.'
+                },
+                {
+                    id: 3,
+                    country: 'Spain',
+                    language: 'es',
+                    category: 'gestures',
+                    title: 'Greeting with Kisses',
+                    info: 'In Spain, people often greet friends and family with two kisses, one on each cheek. This is common for both men greeting women and women greeting other women. Men usually shake hands with other men.'
+                },
+                {
+                    id: 4,
+                    country: 'India',
+                    language: 'hi',
+                    category: 'festivals',
+                    title: 'Diwali - Festival of Lights',
+                    info: 'Diwali is one of the most important festivals in India, celebrating the triumph of light over darkness. Homes are decorated with oil lamps (diyas), candles, and colorful rangoli designs.'
+                }
+            ];
+            
+            const tableBody = document.getElementById('cultureTable');
+            tableBody.innerHTML = '';
+            
+            culturalInfo.forEach(info => {
+                const row = document.createElement('tr');
+                
+                // Capitalize category and format it for display
+                const category = info.category.split(/[._-]/)
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+                
+                // Truncate info text for preview
+                const infoPreview = info.info.length > 100 ? 
+                    info.info.substring(0, 100) + '...' : 
+                    info.info;
+                
+                row.innerHTML = `
+                    <td>${info.country}</td>
+                    <td>${getLanguageName(info.language)} (${info.language})</td>
+                    <td>${category}</td>
+                    <td>${info.title}</td>
+                    <td>${infoPreview}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-primary edit-culture" data-id="${info.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-culture" data-id="${info.id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-info view-culture" data-id="${info.id}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add event listeners for buttons
+            document.querySelectorAll('.edit-culture').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    alert(`Edit cultural information with ID: ${id}`);
+                    // In a real application, this would open an edit modal
+                });
+            });
+            
+            document.querySelectorAll('.delete-culture').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    if (confirm(`Are you sure you want to delete this cultural information item?`)) {
+                        alert(`Cultural information deleted with ID: ${id}`);
+                        loadCulturalInfo(); // Reload the table
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.view-culture').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const infoItem = culturalInfo.find(item => item.id == id);
+                    if (infoItem) {
+                        alert(`${infoItem.title}\n\n${infoItem.info}`);
+                    }
+                });
+            });
+        }
+        
+        // Save new language
+        function saveLanguage() {
+            const name = document.getElementById('languageName').value;
+            const code = document.getElementById('languageCode').value;
+            
+            if (!name || !code) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real application, this would send data to a backend
+            alert(`Language "${name}" (${code}) added successfully!`);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addLanguageModal'));
+            modal.hide();
+            document.getElementById('addLanguageForm').reset();
+            
+            // Reload languages table
+            loadLanguages();
+        }
+        
+        // Save new translation phrase
+        function savePhrase() {
+            const key = document.getElementById('phraseKey').value;
+            const english = document.getElementById('englishPhrase').value;
+            const language = document.getElementById('translationLanguage').value;
+            
+            if (!key || !english || !language) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real application, this would send data to a backend
+            alert(`Phrase "${key}" added successfully!`);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addPhraseModal'));
+            modal.hide();
+            document.getElementById('addPhraseForm').reset();
+            
+            // Reload phrases table
+            loadPhrases(document.getElementById('filterLanguage').value);
+        }
+        
+        // Save new cultural information
+        function saveCulturalInfo() {
+            const country = document.getElementById('cultureCountry').value;
+            const title = document.getElementById('cultureTitle').value;
+            
+            if (!country || !title) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real application, this would send data to a backend
+            alert(`Cultural information "${title}" for ${country} added successfully!`);
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addCultureModal'));
+            modal.hide();
+            document.getElementById('addCultureForm').reset();
+            
+            // Reload cultural info table
+            loadCulturalInfo();
+        }
+        
+        // Helper function to get language name from code
+        function getLanguageName(code) {
+            const languages = {
+                'hi': 'Hindi',
+                'es': 'Spanish',
+                'fr': 'French',
+                'de': 'German',
+                'ja': 'Japanese'
+            };
+            
+            return languages[code] || code;
+        }
+    </script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

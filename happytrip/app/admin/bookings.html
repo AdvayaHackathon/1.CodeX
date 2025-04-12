@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip Admin - Bookings Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Admin Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h4 class="mt-2">HappyTrip Admin</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translation.html">
+                            <i class="fas fa-language"></i> Translation
+                        </a>
+                    </li>
+                    <li class="nav-item mt-5">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Bookings Management</h1>
+                </div>
+
+                <!-- Bookings Tabs -->
+                <ul class="nav nav-tabs mb-4" id="bookingsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="cities-tab" data-bs-toggle="tab" data-bs-target="#cities" type="button">Popular Cities</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="hotels-tab" data-bs-toggle="tab" data-bs-target="#hotels" type="button">Hotels</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="flights-tab" data-bs-toggle="tab" data-bs-target="#flights" type="button">Flights</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button">User Bookings</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="bookingsTabContent">
+                    <!-- Popular Cities Tab -->
+                    <div class="tab-pane fade show active" id="cities" role="tabpanel">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3>Popular Cities</h3>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCityModal">
+                                <i class="fas fa-plus-circle"></i> Add City
+                            </button>
+                        </div>
+                        
+                        <div class="row row-cols-1 row-cols-md-3 g-4" id="citiesContainer">
+                            <!-- Cities will be loaded here dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Hotels Tab -->
+                    <div class="tab-pane fade" id="hotels" role="tabpanel">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3>Hotels</h3>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addHotelModal">
+                                <i class="fas fa-plus-circle"></i> Add Hotel
+                            </button>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Location</th>
+                                        <th>Price/Night</th>
+                                        <th>Rating</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hotelsTableBody">
+                                    <!-- Hotels will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Flights Tab -->
+                    <div class="tab-pane fade" id="flights" role="tabpanel">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3>Flights</h3>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFlightModal">
+                                <i class="fas fa-plus-circle"></i> Add Flight
+                            </button>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Airline</th>
+                                        <th>Flight No.</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Departure</th>
+                                        <th>Arrival</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="flightsTableBody">
+                                    <!-- Flights will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- User Bookings Tab -->
+                    <div class="tab-pane fade" id="bookings" role="tabpanel">
+                        <h3 class="mb-3">User Bookings</h3>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>User</th>
+                                        <th>Booking Type</th>
+                                        <th>Details</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bookingsTableBody">
+                                    <!-- Bookings will be loaded here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add City Modal -->
+    <div class="modal fade" id="addCityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Popular City</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCityForm">
+                        <div class="mb-3">
+                            <label for="cityName" class="form-label">City Name</label>
+                            <input type="text" class="form-control" id="cityName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cityState" class="form-label">State</label>
+                            <input type="text" class="form-control" id="cityState" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cityDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="cityDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cityImage" class="form-label">City Image</label>
+                            <input type="file" class="form-control" id="cityImage" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cityPopularity" class="form-label">Popularity Score (1-10)</label>
+                            <input type="number" class="form-control" id="cityPopularity" min="1" max="10" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveCity">Save City</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Hotel Modal -->
+    <div class="modal fade" id="addHotelModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Hotel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addHotelForm">
+                        <div class="mb-3">
+                            <label for="hotelName" class="form-label">Hotel Name</label>
+                            <input type="text" class="form-control" id="hotelName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotelCity" class="form-label">City</label>
+                            <input type="text" class="form-control" id="hotelCity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotelAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="hotelAddress" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotelDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="hotelDescription" rows="2" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="hotelPrice" class="form-label">Price per Night (₹)</label>
+                                    <input type="number" class="form-control" id="hotelPrice" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="hotelRating" class="form-label">Rating (1-5)</label>
+                                    <input type="number" class="form-control" id="hotelRating" min="1" max="5" step="0.1" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="hotelImage" class="form-label">Hotel Image</label>
+                            <input type="file" class="form-control" id="hotelImage" accept="image/*">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveHotel">Save Hotel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Flight Modal -->
+    <div class="modal fade" id="addFlightModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Flight</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addFlightForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="airline" class="form-label">Airline</label>
+                                    <input type="text" class="form-control" id="airline" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="flightNumber" class="form-label">Flight Number</label>
+                                    <input type="text" class="form-control" id="flightNumber" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="departureCity" class="form-label">From</label>
+                                    <input type="text" class="form-control" id="departureCity" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="arrivalCity" class="form-label">To</label>
+                                    <input type="text" class="form-control" id="arrivalCity" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="departureTime" class="form-label">Departure Time</label>
+                                    <input type="datetime-local" class="form-control" id="departureTime" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="arrivalTime" class="form-label">Arrival Time</label>
+                                    <input type="datetime-local" class="form-control" id="arrivalTime" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="flightPrice" class="form-label">Price (₹)</label>
+                                    <input type="number" class="form-control" id="flightPrice" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="flightClass" class="form-label">Class</label>
+                                    <select class="form-select" id="flightClass" required>
+                                        <option value="">Select Class</option>
+                                        <option value="Economy">Economy</option>
+                                        <option value="Premium Economy">Premium Economy</option>
+                                        <option value="Business">Business</option>
+                                        <option value="First">First</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveFlight">Save Flight</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data for cities, hotels, flights and bookings
+        let cities = [
+            {
+                id: 1,
+                name: 'Delhi',
+                state: 'Delhi',
+                description: 'The capital of India, known for its historical monuments and diverse culture.',
+                image: '../images/delhi.jpg',
+                popularity: 9
+            },
+            {
+                id: 2,
+                name: 'Mumbai',
+                state: 'Maharashtra',
+                description: 'The financial capital of India with beautiful coastline and vibrant entertainment industry.',
+                image: '../images/mumbai.jpg',
+                popularity: 10
+            },
+            {
+                id: 3,
+                name: 'Jaipur',
+                state: 'Rajasthan',
+                description: 'The Pink City famous for its royal heritage, magnificent forts and colorful culture.',
+                image: '../images/jaipur.jpg',
+                popularity: 8
+            },
+            {
+                id: 4,
+                name: 'Varanasi',
+                state: 'Uttar Pradesh',
+                description: 'One of the oldest continuously inhabited cities in the world, famous for its ghats.',
+                image: '../images/varanasi.jpg',
+                popularity: 7
+            },
+            {
+                id: 5,
+                name: 'Bangalore',
+                state: 'Karnataka',
+                description: 'The Silicon Valley of India with pleasant climate and beautiful gardens.',
+                image: '../images/bangalore.jpg',
+                popularity: 8
+            },
+            {
+                id: 6,
+                name: 'Goa',
+                state: 'Goa',
+                description: 'Famous for its beaches, nightlife, and Portuguese-influenced architecture.',
+                image: '../images/goa.jpg',
+                popularity: 9
+            }
+        ];
+
+        let hotels = [
+            {
+                id: 1,
+                name: 'The Taj Palace',
+                city: 'Delhi',
+                address: 'Diplomatic Enclave, New Delhi',
+                description: 'Luxury 5-star hotel with world-class amenities and service.',
+                price: 12000,
+                rating: 4.8,
+                image: '../images/hotel1.jpg'
+            },
+            {
+                id: 2,
+                name: 'The Oberoi',
+                city: 'Mumbai',
+                address: 'Nariman Point, Mumbai',
+                description: 'Elegant luxury hotel with sea views and fine dining options.',
+                price: 15000,
+                rating: 4.9,
+                image: '../images/hotel2.jpg'
+            },
+            {
+                id: 3,
+                name: 'Rambagh Palace',
+                city: 'Jaipur',
+                address: 'Bhawani Singh Road, Jaipur',
+                description: 'Former royal residence turned luxury hotel with heritage architecture.',
+                price: 18000,
+                rating: 4.7,
+                image: '../images/hotel3.jpg'
+            },
+            {
+                id: 4,
+                name: 'Taj Ganges',
+                city: 'Varanasi',
+                address: 'Nadesar Palace Grounds, Varanasi',
+                description: 'Beautiful hotel with traditional decor near the Ganges river.',
+                price: 8000,
+                rating: 4.5,
+                image: '../images/hotel4.jpg'
+            }
+        ];
+
+        let flights = [
+            {
+                id: 1,
+                airline: 'Air India',
+                flightNumber: 'AI123',
+                departureCity: 'Delhi',
+                arrivalCity: 'Mumbai',
+                departureTime: '2023-05-15T10:00',
+                arrivalTime: '2023-05-15T12:00',
+                price: 5000,
+                class: 'Economy'
+            },
+            {
+                id: 2,
+                airline: 'IndiGo',
+                flightNumber: '6E456',
+                departureCity: 'Mumbai',
+                arrivalCity: 'Bangalore',
+                departureTime: '2023-05-16T14:30',
+                arrivalTime: '2023-05-16T16:15',
+                price: 4500,
+                class: 'Economy'
+            },
+            {
+                id: 3,
+                airline: 'Vistara',
+                flightNumber: 'UK789',
+                departureCity: 'Delhi',
+                arrivalCity: 'Goa',
+                departureTime: '2023-05-17T08:45',
+                arrivalTime: '2023-05-17T11:30',
+                price: 7000,
+                class: 'Premium Economy'
+            }
+        ];
+
+        let bookings = [
+            {
+                id: 1,
+                userId: 'user123',
+                username: 'Rohit Sharma',
+                bookingType: 'Hotel',
+                details: 'The Taj Palace, Delhi - 2 nights',
+                date: '2023-05-20',
+                status: 'Confirmed'
+            },
+            {
+                id: 2,
+                userId: 'user456',
+                username: 'Priya Singh',
+                bookingType: 'Flight',
+                details: 'Air India AI123 - Delhi to Mumbai',
+                date: '2023-05-15',
+                status: 'Pending'
+            },
+            {
+                id: 3,
+                userId: 'user789',
+                username: 'Amit Patel',
+                bookingType: 'Package',
+                details: 'Goa Beach Vacation - 5 days',
+                date: '2023-06-10',
+                status: 'Confirmed'
+            }
+        ];
+
+        // Check if admin is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminLoggedIn = localStorage.getItem('adminLoggedIn');
+            
+            if (!adminLoggedIn || adminLoggedIn !== 'true') {
+                window.location.href = 'login.html';
+            } else {
+                // Logout functionality
+                document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('adminLoggedIn');
+                    localStorage.removeItem('adminUsername');
+                    window.location.href = 'login.html';
+                });
+                
+                // Load data
+                loadCities();
+                loadHotels();
+                loadFlights();
+                loadBookings();
+                
+                // Add event listeners for saving
+                document.getElementById('saveCity').addEventListener('click', addCity);
+                document.getElementById('saveHotel').addEventListener('click', addHotel);
+                document.getElementById('saveFlight').addEventListener('click', addFlight);
+            }
+        });
+        
+        // Function to load cities
+        function loadCities() {
+            const container = document.getElementById('citiesContainer');
+            container.innerHTML = '';
+            
+            cities.forEach(city => {
+                const card = document.createElement('div');
+                card.className = 'col';
+                card.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${city.image}" class="card-img-top" alt="${city.name}" style="height: 180px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">${city.name}, ${city.state}</h5>
+                            <p class="card-text">${city.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary">Popularity: ${city.popularity}/10</span>
+                                <div>
+                                    <button class="btn btn-sm btn-primary me-1" onclick="editCity(${city.id})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteCity(${city.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // Function to load hotels
+        function loadHotels() {
+            const tableBody = document.getElementById('hotelsTableBody');
+            tableBody.innerHTML = '';
+            
+            hotels.forEach(hotel => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${hotel.id}</td>
+                    <td><img src="${hotel.image}" alt="${hotel.name}" width="50" height="50" class="rounded"></td>
+                    <td>${hotel.name}</td>
+                    <td>${hotel.city}</td>
+                    <td>₹${hotel.price}</td>
+                    <td>${hotel.rating} <i class="fas fa-star text-warning"></i></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-primary me-1" onclick="editHotel(${hotel.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteHotel(${hotel.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Function to load flights
+        function loadFlights() {
+            const tableBody = document.getElementById('flightsTableBody');
+            tableBody.innerHTML = '';
+            
+            flights.forEach(flight => {
+                const departureDate = new Date(flight.departureTime);
+                const arrivalDate = new Date(flight.arrivalTime);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${flight.id}</td>
+                    <td>${flight.airline}</td>
+                    <td>${flight.flightNumber}</td>
+                    <td>${flight.departureCity}</td>
+                    <td>${flight.arrivalCity}</td>
+                    <td>${departureDate.toLocaleString()}</td>
+                    <td>${arrivalDate.toLocaleString()}</td>
+                    <td>₹${flight.price}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-primary me-1" onclick="editFlight(${flight.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteFlight(${flight.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Function to load bookings
+        function loadBookings() {
+            const tableBody = document.getElementById('bookingsTableBody');
+            tableBody.innerHTML = '';
+            
+            bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${booking.id}</td>
+                    <td>${booking.username}</td>
+                    <td>${booking.bookingType}</td>
+                    <td>${booking.details}</td>
+                    <td>${booking.date}</td>
+                    <td>
+                        <span class="badge ${booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark'}">
+                            ${booking.status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-info me-1" onclick="viewBooking(${booking.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary me-1" onclick="updateBookingStatus(${booking.id})">
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteBooking(${booking.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Function to add a new city
+        function addCity() {
+            const newCity = {
+                id: cities.length > 0 ? Math.max(...cities.map(c => c.id)) + 1 : 1,
+                name: document.getElementById('cityName').value,
+                state: document.getElementById('cityState').value,
+                description: document.getElementById('cityDescription').value,
+                image: '../images/city-placeholder.jpg', // In a real app, this would handle file uploads
+                popularity: parseInt(document.getElementById('cityPopularity').value)
+            };
+            
+            cities.push(newCity);
+            loadCities();
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addCityModal'));
+            modal.hide();
+            document.getElementById('addCityForm').reset();
+        }
+        
+        // Function to add a new hotel
+        function addHotel() {
+            const newHotel = {
+                id: hotels.length > 0 ? Math.max(...hotels.map(h => h.id)) + 1 : 1,
+                name: document.getElementById('hotelName').value,
+                city: document.getElementById('hotelCity').value,
+                address: document.getElementById('hotelAddress').value,
+                description: document.getElementById('hotelDescription').value,
+                price: parseInt(document.getElementById('hotelPrice').value),
+                rating: parseFloat(document.getElementById('hotelRating').value),
+                image: '../images/hotel-placeholder.jpg' // In a real app, this would handle file uploads
+            };
+            
+            hotels.push(newHotel);
+            loadHotels();
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addHotelModal'));
+            modal.hide();
+            document.getElementById('addHotelForm').reset();
+        }
+        
+        // Function to add a new flight
+        function addFlight() {
+            const newFlight = {
+                id: flights.length > 0 ? Math.max(...flights.map(f => f.id)) + 1 : 1,
+                airline: document.getElementById('airline').value,
+                flightNumber: document.getElementById('flightNumber').value,
+                departureCity: document.getElementById('departureCity').value,
+                arrivalCity: document.getElementById('arrivalCity').value,
+                departureTime: document.getElementById('departureTime').value,
+                arrivalTime: document.getElementById('arrivalTime').value,
+                price: parseInt(document.getElementById('flightPrice').value),
+                class: document.getElementById('flightClass').value
+            };
+            
+            flights.push(newFlight);
+            loadFlights();
+            
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addFlightModal'));
+            modal.hide();
+            document.getElementById('addFlightForm').reset();
+        }
+        
+        // Functions for editing (simplified for demo)
+        function editCity(id) {
+            alert(`Editing city with ID: ${id}`);
+            // In a real app, this would populate a form and show a modal
+        }
+        
+        function editHotel(id) {
+            alert(`Editing hotel with ID: ${id}`);
+            // In a real app, this would populate a form and show a modal
+        }
+        
+        function editFlight(id) {
+            alert(`Editing flight with ID: ${id}`);
+            // In a real app, this would populate a form and show a modal
+        }
+        
+        // Functions for deleting (simplified for demo)
+        function deleteCity(id) {
+            if (confirm(`Are you sure you want to delete this city?`)) {
+                cities = cities.filter(c => c.id !== id);
+                loadCities();
+            }
+        }
+        
+        function deleteHotel(id) {
+            if (confirm(`Are you sure you want to delete this hotel?`)) {
+                hotels = hotels.filter(h => h.id !== id);
+                loadHotels();
+            }
+        }
+        
+        function deleteFlight(id) {
+            if (confirm(`Are you sure you want to delete this flight?`)) {
+                flights = flights.filter(f => f.id !== id);
+                loadFlights();
+            }
+        }
+        
+        function deleteBooking(id) {
+            if (confirm(`Are you sure you want to delete this booking?`)) {
+                bookings = bookings.filter(b => b.id !== id);
+                loadBookings();
+            }
+        }
+        
+        // Function for viewing booking details
+        function viewBooking(id) {
+            alert(`Viewing booking with ID: ${id}`);
+            // In a real app, this would show a modal with details
+        }
+        
+        // Function for updating booking status
+        function updateBookingStatus(id) {
+            const booking = bookings.find(b => b.id === id);
+            if (booking) {
+                booking.status = booking.status === 'Confirmed' ? 'Pending' : 'Confirmed';
+                loadBookings();
+            }
+        }
+    </script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 

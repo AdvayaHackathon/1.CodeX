@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip Admin - Vlogs Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Merge Images Library -->
+    <script src="https://unpkg.com/merge-images"></script>
+    <style>
+        body {
+            padding-bottom: 70px; /* Add padding to prevent footer overlap */
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0; /* Align to the left edge */
+            width: calc(100% - var(--sidebar-width, 250px)); /* Adjust width to account for sidebar */
+            margin-left: var(--sidebar-width, 250px); /* Align with main content */
+            background-color: #f8f9fa; /* Match typical footer bg or choose desired color */
+            z-index: 1030; /* Ensure footer is above most content */
+            border-top: 1px solid #dee2e6; /* Optional: Add a top border */
+        }
+
+        /* Adjustments for smaller screens where sidebar might be hidden */
+        @media (max-width: 767.98px) {
+            footer {
+                width: 100%;
+                margin-left: 0;
+            }
+            body {
+                padding-bottom: 100px; /* Increase padding on small screens if footer wraps */
+            }
+        }
+        /* Assuming you have a CSS variable for sidebar width */
+        :root {
+            --sidebar-width: 250px; /* Adjust this value to your actual sidebar width */
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+        }
+        .admin-content-wrapper {
+             margin-left: var(--sidebar-width);
+        }
+        @media (max-width: 767.98px) {
+             .admin-content-wrapper {
+                 margin-left: 0;
+             }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Admin Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h4 class="mt-2">HappyTrip Admin</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translation.html">
+                            <i class="fas fa-language"></i> Translation
+                        </a>
+                    </li>
+                    <li class="nav-item mt-5">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content-wrapper">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Vlogs Management</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="admin-user-info">
+                            Welcome, <span id="adminName">Admin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vlogs Management Content -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Vlogs List</h5>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVlogModal">
+                                    <i class="fas fa-plus-circle"></i> Add New Vlog
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Thumbnail</th>
+                                                <th>Title</th>
+                                                <th>Author</th>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="vlogsTableBody">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vlog Analytics Section -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Vlog Views</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <p class="text-muted">Chart showing vlog views would be displayed here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Vlog Engagement</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <p class="text-muted">Chart showing vlog engagement would be displayed here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vlog Comments Section -->
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Recent Comments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Vlog</th>
+                                                <th>User</th>
+                                                <th>Comment</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="commentsTableBody">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Vlog Modal -->
+    <div class="modal fade" id="addVlogModal" tabindex="-1" aria-labelledby="addVlogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addVlogModalLabel">Add New Vlog</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addVlogForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="vlogTitle" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="vlogTitle" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="vlogAuthor" class="form-label">Author</label>
+                                <input type="text" class="form-control" id="vlogAuthor" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="vlogLocation" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="vlogLocation" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="vlogTags" class="form-label">Tags (comma-separated)</label>
+                                <input type="text" class="form-control" id="vlogTags">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vlogDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="vlogDescription" rows="3" required></textarea>
+                        </div>
+                        
+                        <!-- Thumbnail Image Upload -->
+                        <div class="mb-3">
+                            <label for="vlogThumbnail" class="form-label">Thumbnail Image</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="vlogThumbnail" accept="image/*" required>
+                                <button class="btn btn-outline-secondary" type="button" id="previewThumbnailBtn">Preview</button>
+                            </div>
+                            <div id="thumbnailPreview" class="mt-2 d-none">
+                                <img src="" alt="Thumbnail Preview" class="img-thumbnail" style="max-height: 200px;">
+                            </div>
+                        </div>
+                        
+                        <!-- Additional Images Upload for Collage -->
+                        <div class="mb-3">
+                            <label for="additionalImages" class="form-label">Additional Images (for creating collage)</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" id="additionalImages" accept="image/*" multiple>
+                                <button class="btn btn-outline-secondary" type="button" id="previewAdditionalBtn">Preview</button>
+                            </div>
+                            <small class="form-text text-muted">Select multiple images to create a collage</small>
+                            <div id="additionalPreview" class="mt-2 d-none">
+                                <div id="additionalImagesContainer" class="row"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Merge Images Button -->
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-primary" id="mergeImagesBtn">
+                                <i class="fas fa-object-group me-2"></i>Create Collage
+                            </button>
+                            <div id="mergedImagePreview" class="mt-2 d-none">
+                                <img src="" alt="Merged Image" class="img-thumbnail" style="max-height: 300px;">
+                                <div class="mt-2">
+                                    <button type="button" class="btn btn-sm btn-success" id="useMergedBtn">
+                                        Use as Thumbnail
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="vlogVideo" class="form-label">Video File or URL</label>
+                            <input type="text" class="form-control" id="vlogVideo" placeholder="YouTube URL or upload path">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveVlogBtn">Save Vlog</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Vlog Modal -->
+    <div class="modal fade" id="editVlogModal" tabindex="-1" aria-labelledby="editVlogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editVlogModalLabel">Edit Vlog</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editVlogForm">
+                        <input type="hidden" id="editVlogId">
+                        <div class="mb-3">
+                            <label for="editVlogTitle" class="form-label">Vlog Title</label>
+                            <input type="text" class="form-control" id="editVlogTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogAuthor" class="form-label">Author Name</label>
+                            <input type="text" class="form-control" id="editVlogAuthor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="editVlogLocation" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editVlogDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogThumbnail" class="form-label">Thumbnail Image</label>
+                            <div class="d-flex align-items-center">
+                                <img id="currentThumbnail" src="" alt="Current Thumbnail" class="me-3" style="max-height: 80px;">
+                                <input type="file" class="form-control" id="editVlogThumbnail" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogVideo" class="form-label">Video File or YouTube URL</label>
+                            <input type="text" class="form-control" id="editVlogVideo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVlogTags" class="form-label">Tags (comma separated)</label>
+                            <input type="text" class="form-control" id="editVlogTags">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="updateVlogBtn">Update Vlog</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteVlogModal" tabindex="-1" aria-labelledby="deleteVlogModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteVlogModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this vlog? This action cannot be undone.</p>
+                    <input type="hidden" id="deleteVlogId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Improved Footer -->
+    <footer class="text-center py-2 mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <small><i class="fas fa-envelope me-1"></i> <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a></small>
+                </div>
+                <div class="col-md-4">
+                    <small><i class="fas fa-map-marker-alt me-1"></i> Bengaluru, Karnataka, India</small>
+                </div>
+                <div class="col-md-4">
+                    <small><a href="dashboard.html">Dashboard</a> • <a href="places.html">Places</a> • <a href="vlogs.html">Vlogs</a></small>
+                </div>
+            </div>
+            <div class="footer-copyright mt-1">
+                <small>&copy; 2024 HappyTrip. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check if admin is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use the requireAdminAuth function from auth.js
+            if (!requireAdminAuth()) {
+                return; // Stop execution if not authenticated
+            }
+            
+            // Load vlogs data
+            loadVlogs();
+            
+            // Setup event listeners
+            document.getElementById('saveVlogBtn').addEventListener('click', addVlog);
+            document.getElementById('updateVlogBtn').addEventListener('click', updateVlog);
+            document.getElementById('confirmDeleteBtn').addEventListener('click', deleteVlog);
+            
+            // Image preview functionality
+            document.getElementById('previewThumbnailBtn').addEventListener('click', previewThumbnail);
+            document.getElementById('previewAdditionalBtn').addEventListener('click', previewAdditionalImages);
+            document.getElementById('mergeImagesBtn').addEventListener('click', mergeImages);
+            document.getElementById('useMergedBtn').addEventListener('click', useMergedAsThumbnail);
+            
+            // Image file change listeners
+            document.getElementById('vlogThumbnail').addEventListener('change', function() {
+                // Automatically preview thumbnail when file is selected
+                previewThumbnail();
+            });
+            
+            document.getElementById('additionalImages').addEventListener('change', function() {
+                // Automatically preview additional images when files are selected
+                previewAdditionalImages();
+            });
+        });
+        
+        // Preview thumbnail image
+        function previewThumbnail() {
+            const thumbnailInput = document.getElementById('vlogThumbnail');
+            const previewContainer = document.getElementById('thumbnailPreview');
+            const previewImage = previewContainer.querySelector('img');
+            
+            if (thumbnailInput.files && thumbnailInput.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('d-none');
+                }
+                
+                reader.readAsDataURL(thumbnailInput.files[0]);
+            }
+        }
+        
+        // Preview additional images
+        function previewAdditionalImages() {
+            const additionalInput = document.getElementById('additionalImages');
+            const previewContainer = document.getElementById('additionalPreview');
+            const imagesContainer = document.getElementById('additionalImagesContainer');
+            
+            // Clear previous previews
+            imagesContainer.innerHTML = '';
+            
+            if (additionalInput.files && additionalInput.files.length > 0) {
+                previewContainer.classList.remove('d-none');
+                
+                Array.from(additionalInput.files).forEach((file, index) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-4 mb-3';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-fluid';
+                        img.style.maxHeight = '150px';
+                        img.dataset.index = index;
+                        
+                        col.appendChild(img);
+                        imagesContainer.appendChild(col);
+                    }
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+        
+        // Merge images to create a collage
+        function mergeImages() {
+            const thumbnailInput = document.getElementById('vlogThumbnail');
+            const additionalInput = document.getElementById('additionalImages');
+            const mergedPreview = document.getElementById('mergedImagePreview');
+            const mergedImage = mergedPreview.querySelector('img');
+            
+            // Check if we have at least 2 images to merge
+            if (!(thumbnailInput.files && thumbnailInput.files[0]) || 
+                !(additionalInput.files && additionalInput.files.length > 0)) {
+                alert('Please select a thumbnail and at least one additional image to create a collage.');
+                return;
+            }
+            
+            // Collect all images to merge
+            const allFiles = [thumbnailInput.files[0], ...Array.from(additionalInput.files)];
+            if (allFiles.length < 2) {
+                alert('At least 2 images are required to create a collage.');
+                return;
+            }
+            
+            // Convert images to data URLs
+            const imagePromises = allFiles.map(file => {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = e => resolve(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+            });
+            
+            // When all images are loaded, merge them
+            Promise.all(imagePromises).then(images => {
+                // Convert data URLs to image objects with positions
+                const imageObjects = [];
+                
+                // Determine the layout based on number of images
+                if (images.length === 2) {
+                    // Two images side by side
+                    imageObjects.push({ src: images[0], x: 0, y: 0, width: 400, height: 300 });
+                    imageObjects.push({ src: images[1], x: 400, y: 0, width: 400, height: 300 });
+                } else if (images.length === 3) {
+                    // One image on top, two below
+                    imageObjects.push({ src: images[0], x: 200, y: 0, width: 400, height: 300 });
+                    imageObjects.push({ src: images[1], x: 0, y: 300, width: 400, height: 300 });
+                    imageObjects.push({ src: images[2], x: 400, y: 300, width: 400, height: 300 });
+                } else {
+                    // Grid layout for 4+ images
+                    const cols = Math.ceil(Math.sqrt(images.length));
+                    const cellWidth = 800 / cols;
+                    const cellHeight = 600 / Math.ceil(images.length / cols);
+                    
+                    images.forEach((img, i) => {
+                        const row = Math.floor(i / cols);
+                        const col = i % cols;
+                        imageObjects.push({
+                            src: img,
+                            x: col * cellWidth,
+                            y: row * cellHeight,
+                            width: cellWidth,
+                            height: cellHeight
+                        });
+                    });
+                }
+                
+                // Use the imported merge-images library to create the collage
+                // Note: This calls the library function, not our local function (naming conflict)
+                window.mergeImages(imageObjects, {
+                    width: 800,
+                    height: 600
+                }).then(b64 => {
+                    mergedImage.src = b64;
+                    mergedPreview.classList.remove('d-none');
+                    
+                    // Store the merged image in localStorage (accessible to all pages)
+                    localStorage.setItem('latestMergedVlogImage', b64);
+                    
+                    // Also store in sessionStorage as a backup
+                    sessionStorage.setItem('latestMergedVlogImage', b64);
+                    
+                    // Store additional images for the main site
+                    const additionalImagesArray = Array.from(images);
+                    localStorage.setItem('vlogAdditionalImages', JSON.stringify(additionalImagesArray));
+                }).catch(error => {
+                    console.error('Error merging images:', error);
+                    alert('Failed to merge images. Please try again.');
+                });
+            });
+        }
+        
+        // Use merged image as thumbnail
+        function useMergedAsThumbnail() {
+            const mergedPreview = document.getElementById('mergedImagePreview');
+            const mergedImage = mergedPreview.querySelector('img');
+            const thumbnailPreview = document.getElementById('thumbnailPreview');
+            const thumbnailImage = thumbnailPreview.querySelector('img');
+            
+            if (mergedImage && mergedImage.src) {
+                thumbnailImage.src = mergedImage.src;
+                thumbnailPreview.classList.remove('d-none');
+                
+                // Store the merged image as the selected thumbnail
+                const thumbnailInput = document.getElementById('vlogThumbnail');
+                thumbnailInput.dataset.mergedImage = mergedImage.src;
+            } else {
+                alert('Please create a collage first before using it as thumbnail');
+            }
+        }
+
+        // Load vlogs data
+        function loadVlogs() {
+            // First try to load vlogs from localStorage
+            let vlogs = JSON.parse(localStorage.getItem('vlogs') || '[]');
+            
+            // If no vlogs in localStorage, use the mock data
+            if (vlogs.length === 0) {
+                vlogs = [
+                    { id: 1, title: 'My Trip to Varanasi', author: 'TravelBuddy', location: 'Varanasi', date: '2023-04-12', thumbnail: '../images/vlogs/varanasi.jpg', views: 1250 },
+                    { id: 2, title: 'Kerala Backwaters', author: 'NatureLover', location: 'Kerala', date: '2023-04-09', thumbnail: '../images/vlogs/kerala.jpg', views: 980 },
+                    { id: 3, title: 'Delhi Street Food', author: 'FoodExplorer', location: 'Delhi', date: '2023-04-07', thumbnail: '../images/vlogs/delhi.jpg', views: 1560 },
+                    { id: 4, title: 'Rajasthan Desert Safari', author: 'AdventureSoul', location: 'Jaisalmer', date: '2023-04-05', thumbnail: '../images/vlogs/rajasthan.jpg', views: 750 },
+                    { id: 5, title: 'Exploring Mysore Palace', author: 'HistoryBuff', location: 'Mysore', date: '2023-04-03', thumbnail: '../images/vlogs/mysore.jpg', views: 890 }
+                ];
+            }
+            
+            // Check for any newly uploaded images from localStorage that aren't already in the vlogs list
+            const mergedImage = localStorage.getItem('latestMergedVlogImage');
+            if (mergedImage && !vlogs.some(v => v.thumbnail === mergedImage)) {
+                // Create a new vlog entry with the merged image
+                const newVlog = {
+                    id: Date.now(),
+                    title: 'New Vlog with Merged Images',
+                    author: localStorage.getItem('adminUsername') || 'Admin',
+                    location: 'Custom Location',
+                    date: new Date().toISOString().split('T')[0],
+                    thumbnail: mergedImage,
+                    views: 0
+                };
+                
+                vlogs.unshift(newVlog);
+                
+                // Update localStorage with the new vlog
+                localStorage.setItem('vlogs', JSON.stringify(vlogs));
+                localStorage.setItem('mostRecentVlog', JSON.stringify(newVlog));
+            }
+            
+            const vlogsTableBody = document.getElementById('vlogsTableBody');
+            vlogsTableBody.innerHTML = '';
+            
+            vlogs.forEach(vlog => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vlog.id}</td>
+                    <td><img src="${vlog.thumbnail}" alt="${vlog.title}" style="width: 80px; height: 50px; object-fit: cover;"></td>
+                    <td>${vlog.title}</td>
+                    <td>${vlog.author}</td>
+                    <td>${vlog.location}</td>
+                    <td>${new Date(vlog.date).toLocaleDateString()}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-primary edit-vlog" data-id="${vlog.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-vlog" data-id="${vlog.id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-info view-stats" data-id="${vlog.id}">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                vlogsTableBody.appendChild(row);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.edit-vlog').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    openEditVlogModal(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-vlog').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    openDeleteVlogModal(id);
+                });
+            });
+            
+            document.querySelectorAll('.view-stats').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    alert(`Viewing stats for vlog ID: ${id} would open a detailed analytics view in a real application.`);
+                });
+            });
+            
+            // Load comments data
+            loadComments();
+        }
+        
+        // Load comments data
+        function loadComments() {
+            // In a real application, this would fetch data from a backend
+            // For this demo, we'll use mock data
+            const comments = [
+                { id: 1, vlog: 'My Trip to Varanasi', user: 'Traveler123', comment: 'Great video! I loved the Ganga Aarti scenes.', date: '2023-04-14' },
+                { id: 2, vlog: 'Kerala Backwaters', user: 'BeachLover', comment: 'The houseboat experience looks amazing!', date: '2023-04-13' },
+                { id: 3, vlog: 'Delhi Street Food', user: 'Foodie42', comment: 'Now I'm hungry! Where's that Paratha place?', date: '2023-04-12' }
+            ];
+            
+            const commentsTableBody = document.getElementById('commentsTableBody');
+            commentsTableBody.innerHTML = '';
+            
+            comments.forEach(comment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${comment.vlog}</td>
+                    <td>${comment.user}</td>
+                    <td>${comment.comment}</td>
+                    <td>${new Date(comment.date).toLocaleDateString()}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-danger delete-comment" data-id="${comment.id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                commentsTableBody.appendChild(row);
+            });
+        }
+        
+        // Open edit vlog modal
+        function openEditVlogModal(id) {
+            // In a real application, this would fetch the vlog data from a backend
+            // For this demo, we'll use mock data
+            const vlogs = [
+                { id: 1, title: 'My Trip to Varanasi', author: 'TravelBuddy', location: 'Varanasi', description: 'Join me as I explore the ancient city of Varanasi and witness the spiritual Ganga Aarti ceremony.', thumbnail: '../images/vlogs/varanasi.jpg', video: 'https://youtube.com/watch?v=example1', tags: 'varanasi,spiritual,india,travel' },
+                { id: 2, title: 'Kerala Backwaters', author: 'NatureLover', location: 'Kerala', description: 'Experience the serene backwaters of Kerala as we cruise on a traditional houseboat.', thumbnail: '../images/vlogs/kerala.jpg', video: 'https://youtube.com/watch?v=example2', tags: 'kerala,backwaters,houseboat,nature' }
+            ];
+            
+            const vlog = vlogs.find(v => v.id == id);
+            
+            if (vlog) {
+                document.getElementById('editVlogId').value = vlog.id;
+                document.getElementById('editVlogTitle').value = vlog.title;
+                document.getElementById('editVlogAuthor').value = vlog.author;
+                document.getElementById('editVlogLocation').value = vlog.location;
+                document.getElementById('editVlogDescription').value = vlog.description;
+                document.getElementById('currentThumbnail').src = vlog.thumbnail;
+                document.getElementById('editVlogVideo').value = vlog.video;
+                document.getElementById('editVlogTags').value = vlog.tags;
+                
+                // Open the modal
+                const editModal = new bootstrap.Modal(document.getElementById('editVlogModal'));
+                editModal.show();
+            }
+        }
+        
+        // Open delete vlog modal
+        function openDeleteVlogModal(id) {
+            document.getElementById('deleteVlogId').value = id;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteVlogModal'));
+            deleteModal.show();
+        }
+        
+        // Add new vlog
+        function addVlog() {
+            // Get form values
+            const title = document.getElementById('vlogTitle').value;
+            const author = document.getElementById('vlogAuthor').value;
+            const location = document.getElementById('vlogLocation').value;
+            const description = document.getElementById('vlogDescription').value;
+            const thumbnailInput = document.getElementById('vlogThumbnail');
+            const videoUrl = document.getElementById('vlogVideo').value;
+            const tags = document.getElementById('vlogTags').value;
+            
+            if (!title || !author || !location || !description || !thumbnailInput.files[0]) {
+                alert('Please fill in all required fields and select a thumbnail image.');
+                return;
+            }
+            
+            // Get thumbnail image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const thumbnailData = e.target.result;
+                
+                // Collect additional images data if any
+                const additionalImagesData = [];
+                const additionalInput = document.getElementById('additionalImages');
+                if (additionalInput.files && additionalInput.files.length > 0) {
+                    // Process additional images (handled in a simplified way for demo purposes)
+                    // In a real app, you would use Promise.all to handle multiple async operations
+                    Array.from(additionalInput.files).forEach(file => {
+                        const fileReader = new FileReader();
+                        fileReader.onload = function(event) {
+                            additionalImagesData.push(event.target.result);
+                        };
+                        fileReader.readAsDataURL(file);
+                    });
+                }
+                
+                // In a real application, this would send data to a backend
+                // For this demo, we'll store in localStorage to demonstrate persistence
+                const newVlogData = {
+                    id: Date.now(), // Use timestamp as unique ID
+                    title,
+                    author,
+                    location,
+                    description,
+                    thumbnail: thumbnailData,
+                    additionalImages: additionalImagesData,
+                    video: videoUrl,
+                    tags: tags,
+                    date: new Date().toISOString().split('T')[0],
+                    views: 0
+                };
+                
+                // Get the merged image if available
+                const mergedImage = localStorage.getItem('latestMergedVlogImage');
+                if (mergedImage) {
+                    newVlogData.thumbnail = mergedImage;
+                }
+                
+                // Save to localStorage
+                const vlogs = JSON.parse(localStorage.getItem('vlogs') || '[]');
+                vlogs.push(newVlogData);
+                localStorage.setItem('vlogs', JSON.stringify(vlogs));
+                
+                // Save the most recent vlog separately for easy access
+                localStorage.setItem('mostRecentVlog', JSON.stringify(newVlogData));
+                
+                // Clear the merged image data after using it
+                localStorage.removeItem('latestMergedVlogImage');
+                sessionStorage.removeItem('latestMergedVlogImage');
+                
+                // Close the modal and reset form
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addVlogModal'));
+                modal.hide();
+                document.getElementById('addVlogForm').reset();
+                
+                // Reset preview areas
+                document.getElementById('thumbnailPreview').classList.add('d-none');
+                document.getElementById('additionalPreview').classList.add('d-none');
+                document.getElementById('mergedImagePreview').classList.add('d-none');
+                
+                // Reload vlogs
+                loadVlogs();
+                
+                alert(`Vlog "${title}" by ${author} added successfully!`);
+            };
+            
+            reader.readAsDataURL(thumbnailInput.files[0]);
+        }
+        
+        // Update vlog
+        function updateVlog() {
+            // Get form values
+            const id = document.getElementById('editVlogId').value;
+            const title = document.getElementById('editVlogTitle').value;
+            
+            // In a real application, this would send data to a backend
+            // For this demo, we'll just display an alert
+            alert(`Vlog ID: ${id} updated successfully!`);
+            
+            // Close the modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editVlogModal'));
+            modal.hide();
+            
+            // Reload vlogs
+            loadVlogs();
+        }
+        
+        // Delete vlog
+        function deleteVlog() {
+            // Get vlog ID
+            const id = document.getElementById('deleteVlogId').value;
+            
+            // In a real application, this would send a delete request to a backend
+            // For this demo, we'll just display an alert
+            alert(`Vlog ID: ${id} deleted successfully!`);
+            
+            // Close the modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteVlogModal'));
+            modal.hide();
+            
+            // Reload vlogs
+            loadVlogs();
+        }
+    </script>
+</body>
+</html> 

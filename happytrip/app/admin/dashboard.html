@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HappyTrip Admin - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Admin Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h4 class="mt-2">HappyTrip Admin</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html">
+                            <i class="fas fa-map-marker-alt"></i> Places
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vlogs.html">
+                            <i class="fas fa-video"></i> Vlogs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html">
+                            <i class="fas fa-calendar-check"></i> Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html">
+                            <i class="fas fa-first-aid"></i> Emergency Info
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translation.html">
+                            <i class="fas fa-language"></i> Translation
+                        </a>
+                    </li>
+                    <li class="nav-item mt-5">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">
+                            <i class="fas fa-arrow-left"></i> Back to Main Site
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content-wrapper">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="admin-user-info">
+                            Welcome, <span id="adminName">Admin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">
+                                <h5>Total Places</h5>
+                                <h2 id="totalPlaces">12</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">
+                                <h5>Total Vlogs</h5>
+                                <h2 id="totalVlogs">8</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-dark mb-4">
+                            <div class="card-body">
+                                <h5>Total Bookings</h5>
+                                <h2 id="totalBookings">24</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white mb-4">
+                            <div class="card-body">
+                                <h5>Users</h5>
+                                <h2 id="totalUsers">45</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>Recent Places Added</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Location</th>
+                                                <th>Added On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentPlacesTable">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>Recent Vlogs</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Author</th>
+                                                <th>Posted On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentVlogsTable">
+                                            <!-- Will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>Quick Access</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <a href="places.html" class="btn btn-primary d-block">
+                                            <i class="fas fa-plus-circle"></i> Add New Place
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <a href="vlogs.html" class="btn btn-success d-block">
+                                            <i class="fas fa-plus-circle"></i> Manage Vlogs
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <a href="bookings.html" class="btn btn-warning d-block">
+                                            <i class="fas fa-plus-circle"></i> Manage Bookings
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Improved Footer -->
+    <footer class="text-center py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a></p>
+                    <p><i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a></p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Address</h5>
+                    <p><i class="fas fa-map-marker-alt me-1"></i> Bengaluru, Karnataka, India</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <p><a href="dashboard.html">Dashboard</a> • <a href="places.html">Places</a> • <a href="vlogs.html">Vlogs</a></p>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 HappyTrip. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Check if admin is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use the requireAdminAuth function from auth.js
+            if (!requireAdminAuth()) {
+                return; // Stop execution if not authenticated
+            }
+            
+            const adminUsername = localStorage.getItem('adminUsername');
+            document.getElementById('adminName').textContent = adminUsername;
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('adminLoggedIn');
+                localStorage.removeItem('adminUsername');
+                window.location.href = 'login.html';
+            });
+            
+            // Load dashboard data
+            loadDashboardData();
+        });
+        
+        // Function to load dashboard data
+        function loadDashboardData() {
+            // In a real application, this would fetch data from a backend
+            // For this demo, we'll use mock data
+            
+            // Recent Places
+            const recentPlaces = [
+                { name: 'Taj Mahal', location: 'Agra', date: '2023-04-10' },
+                { name: 'Jaipur Palace', location: 'Jaipur', date: '2023-04-08' },
+                { name: 'Gateway of India', location: 'Mumbai', date: '2023-04-05' }
+            ];
+            
+            const recentPlacesTable = document.getElementById('recentPlacesTable');
+            recentPlacesTable.innerHTML = '';
+            
+            recentPlaces.forEach(place => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${place.name}</td>
+                    <td>${place.location}</td>
+                    <td>${new Date(place.date).toLocaleDateString()}</td>
+                `;
+                recentPlacesTable.appendChild(row);
+            });
+            
+            // Recent Vlogs
+            const recentVlogs = [
+                { title: 'My Trip to Varanasi', author: 'TravelBuddy', date: '2023-04-12' },
+                { title: 'Kerala Backwaters', author: 'NatureLover', date: '2023-04-09' },
+                { title: 'Delhi Street Food', author: 'FoodExplorer', date: '2023-04-07' }
+            ];
+            
+            const recentVlogsTable = document.getElementById('recentVlogsTable');
+            recentVlogsTable.innerHTML = '';
+            
+            recentVlogs.forEach(vlog => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${vlog.title}</td>
+                    <td>${vlog.author}</td>
+                    <td>${new Date(vlog.date).toLocaleDateString()}</td>
+                `;
+                recentVlogsTable.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html> 

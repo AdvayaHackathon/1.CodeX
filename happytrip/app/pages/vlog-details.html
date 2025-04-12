@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vlog Details - HappyTrip</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="app-container">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse" id="sidebar">
+                <div class="logo-container text-center py-4">
+                    <img src="../images/logo.jpg" alt="HappyTrip Logo" class="logo img-fluid">
+                    <h2 class="mt-2">HappyTrip</h2>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="places.html"><i class="fas fa-map-marker-alt"></i> Places</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="vlogs.html"><i class="fas fa-video"></i> Vlogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="emergency.html"><i class="fas fa-first-aid"></i> Emergency Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="translator.html"><i class="fas fa-language"></i> Translator & Culture</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <h1 class="h2"><a href="vlogs.html" class="text-decoration-none"><i class="fas fa-arrow-left me-2"></i></a> <span id="vlogTitle">Loading Vlog...</span></h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="user-menu">
+                            <button id="loginBtn" class="btn btn-outline-primary me-2">Log In</button>
+                            <button id="registerBtn" class="btn btn-primary">Register</button>
+                            <div id="userProfileArea" class="d-none">
+                                <span id="username">User</span>
+                                <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vlog Details Content -->
+                <div class="vlog-details-content">
+                    <div class="row">
+                        <div class="col-lg-8 mb-4">
+                            <div class="card">
+                                <!-- Vlog Media (Video or Image) -->
+                                <div class="card-img-top bg-light d-flex justify-content-center align-items-center" id="vlogMediaContainer" style="min-height: 300px;">
+                                     <p class="text-muted">Loading media...</p>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title" id="vlogTitleDisplay"></h3> <!-- Duplicate Title for clarity -->
+                                    <div class="vlog-meta mb-3 d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-user"></i> <span id="vlogAuthor"></span></span>
+                                        <span><i class="fas fa-calendar-alt"></i> <span id="vlogDate"></span></span>
+                                        <span><i class="fas fa-map-marker-alt"></i> <span id="vlogLocation"></span></span>
+                                    </div>
+                                    <hr>
+                                    <h5>Description</h5>
+                                    <p id="vlogDescription"></p>
+                                    <hr>
+                                    <h5>Tags</h5>
+                                    <div id="vlogTags" class="mb-3">
+                                        <span class="text-muted">Loading tags...</span>
+                                    </div>
+                                    
+                                    <!-- Action Buttons -->
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <button class="btn btn-primary" id="likeVlogBtn">
+                                            <i class="far fa-thumbs-up"></i> Like (<span id="likeCount">0</span>)
+                                        </button>
+                                        <button class="btn btn-outline-secondary" id="shareVlogBtn">
+                                            <i class="fas fa-share"></i> Share
+                                        </button>
+                                        <button class="btn btn-outline-danger" id="saveVlogBtn">
+                                            <i class="far fa-bookmark"></i> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Related Vlogs / Comments Column (Optional) -->
+                        <div class="col-lg-4 mb-4">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5>Related Vlogs</h5>
+                                </div>
+                                <div class="card-body" id="relatedVlogsContainer">
+                                    <p class="text-muted">Related vlogs loading...</p>
+                                    <!-- Related vlogs will be loaded here -->
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Comments</h5>
+                                </div>
+                                <div class="card-body" id="commentsContainer">
+                                    <p class="text-muted">Comments loading...</p>
+                                    <!-- Comments section -->
+                                </div>
+                                <div class="card-footer">
+                                    <form id="commentForm">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Add a comment...">
+                                            <button class="btn btn-primary" type="submit">Post</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Authentication Modals will be included via JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/vlog-details.js"></script>
+    
+<footer class="container-fluid bg-light text-center text-muted py-3 mt-auto">
+    <div class="container">
+        <p class="mb-0">Contact Us:</p>
+        <p class="mb-0">
+            <i class="fas fa-envelope me-1"></i> Email: <a href="mailto:happytrip4@gmail.com">happytrip4@gmail.com</a> |
+            <i class="fas fa-phone me-1"></i> Phone: <a href="tel:9900532278">9900532278</a> |
+            <i class="fas fa-map-marker-alt me-1"></i> Address: Bengaluru, Karnataka, India
+        </p>
+        <p class="mt-2 mb-0">&copy; 2024 HappyTrip. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html> 
